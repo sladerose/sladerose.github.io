@@ -1,6 +1,6 @@
 {
   "settings": {
-    "name": "(:",
+    "name": "digital design studio | brodie and slade",
     "currentPage": "index.html",
     "theme": {
       "name": "mobirise5",
@@ -48,7 +48,7 @@
     "imageResize": true,
     "robotsSwitcher": true,
     "robotsText": "User-agent: *\nDisallow: /cgi-bin\n",
-    "favicon": "@PROJECT_PATH@/assets/images/robyn-scholtz-128x85.png",
+    "favicon": "@PROJECT_PATH@/assets/images/3994346-512-128x128.png",
     "sitemapSwitcher": false,
     "sitemapSwitcherAuto": false,
     "siteUrl": false,
@@ -57,7 +57,11 @@
     "publishChangesOnly": true,
     "uniqCompNum": 28,
     "versionPublish": "5.2.9",
-    "screenshot": "screenshot.png"
+    "screenshot": "screenshot.png",
+    "mbrsiteDomain": "aqljirvguy",
+    "witsec-language": false,
+    "witsec-white-label": false,
+    "witsec-mailform": false
   },
   "pages": {
     "index.html": {
