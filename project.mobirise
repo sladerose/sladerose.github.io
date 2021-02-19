@@ -27,7 +27,7 @@
         "isGhostButtonBorder": true,
         "underlinedLinks": true,
         "isAnimatedOnScroll": false,
-        "isScrollToTopButton": true
+        "isScrollToTopButton": false
       },
       "additionalSetColors": []
     },
@@ -54,7 +54,7 @@
     "siteUrl": false,
     "cookiesAlert": false,
     "gdpr": false,
-    "publishChangesOnly": false,
+    "publishChangesOnly": true,
     "uniqCompNum": 38,
     "versionPublish": "5.2.9",
     "screenshot": "screenshot.png",
