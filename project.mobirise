@@ -56,7 +56,7 @@
     "siteUrl": false,
     "cookiesAlert": false,
     "gdpr": false,
-    "publishChangesOnly": true,
+    "publishChangesOnly": false,
     "uniqCompNum": 84,
     "versionPublish": "5.2.9",
     "screenshot": "screenshot.png",
