@@ -94,15 +94,15 @@
               "background-color": "@bg-value"
             },
             ".mbr-text, .mbr-section-btn": {
-              "text-align": "right",
+              "text-align": "center",
               "color": "#fafafa"
             },
             ".mbr-section-title": {
-              "text-align": "right",
+              "text-align": "center",
               "color": "#fafafa"
             },
             ".mbr-section-subtitle": {
-              "text-align": "right",
+              "text-align": "center",
               "color": "#fafafa"
             }
           },
