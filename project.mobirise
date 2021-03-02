@@ -69,10 +69,11 @@
     "uniqCompNum": 89,
     "versionPublish": "5.3.0",
     "screenshot": "screenshot.png",
-    "mbrsiteDomain": "ljkchny3sg",
+    "mbrsiteDomain": "sy4pbklypn",
     "witsec-language": false,
     "witsec-white-label": true,
-    "witsec-mailform": false
+    "witsec-mailform": false,
+    "google-analytics": "<!-- Global site tag (gtag.js) - Google Analytics -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-X2V0NSZ53W\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-X2V0NSZ53W');\n</script>"
   },
   "pages": {
     "index.html": {
