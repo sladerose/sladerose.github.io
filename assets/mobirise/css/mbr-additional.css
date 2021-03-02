@@ -889,18 +889,6 @@ a {
 .cid-spEKAIvPmM .mbr-section-subtitle {
   color: #fafafa;
 }
-.cid-spLHfzX2nb {
-  background-image: url("../../../assets/images/scott-graham-oqmzwnd3thu-unsplash-2000x1335.jpg");
-}
-.cid-spLHfzX2nb .mbr-section-title {
-  color: #ffffff;
-  text-align: center;
-}
-.cid-spLHfzX2nb .mbr-text,
-.cid-spLHfzX2nb .mbr-section-btn {
-  text-align: center;
-  color: #ffffff;
-}
 .cid-spD2lcGykU {
   background-image: url("../../../assets/images/r-architecture-kqpehywelrq-unsplash-2000x1333.jpg");
 }
@@ -925,6 +913,13 @@ a {
   text-align: center;
   color: #ffffff;
 }
+.cid-squeZXGoZO {
+  background-image: url("../../../assets/images/things1-2000x1333.jpg");
+}
+.cid-squeZXGoZO .mbr-text,
+.cid-squeZXGoZO .mbr-section-btn {
+  text-align: center;
+}
 .cid-spFLPs85f4 {
   background-image: url("../../../assets/images/cover1-2000x1334.jpg");
 }
@@ -946,6 +941,18 @@ a {
 }
 .cid-spD2kNt7qW .mbr-text,
 .cid-spD2kNt7qW .mbr-section-btn {
+  text-align: center;
+  color: #ffffff;
+}
+.cid-spLHfzX2nb {
+  background-image: url("../../../assets/images/scott-graham-oqmzwnd3thu-unsplash-2000x1335.jpg");
+}
+.cid-spLHfzX2nb .mbr-section-title {
+  color: #ffffff;
+  text-align: center;
+}
+.cid-spLHfzX2nb .mbr-text,
+.cid-spLHfzX2nb .mbr-section-btn {
   text-align: center;
   color: #ffffff;
 }
