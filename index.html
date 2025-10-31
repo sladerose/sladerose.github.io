@@ -7,82 +7,31 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <div class="header-left">
-        <span class="logo-text">Slade</span>
-      </div>
-      <nav class="header-right">
-        <a href="mailto:slade.rose@athenium.co.za">Contact me</a>
-      </nav>
-    </header>
-
     <main>
-      <div class="profile-content">
-        <div class="left-column">
-          <section id="hero">
-            <img src="avatar.jpeg" alt="Slade Rose" class="avatar" />
-            <p>
-              I'm a software engineer passionate about building
-              innovative solutions.
-            </p>
-          </section>
-        </div>
-        <div class="right-column">
-          <section id="experience">
-            <h2>What I'm doing right now</h2>
-            <div class="experience-details">
-              <p>
-                As a <strong>Development and Applications Manager</strong> at
-                Athenium, I design and modify complex technology architectures,
-                integrate software systems, and conduct thorough functionality
-                testing. I evaluate existing IT systems to recommend strategic
-                improvements, build and implement secure, scalable information
-                systems, and lead cross-functional teams to drive project
-                success. My role also involves developing detailed technical
-                specifications, defining clear project deliverables, identifying
-                and mitigating risks, and mentoring team members while
-                monitoring project progress.
-              </p>
-            </div>
-          </section>
+      <div id="terminal-output">
+        <!-- Terminal output will be rendered here by JavaScript -->
+      </div>
+      <div id="terminal-input">
+        <span id="prompt">user@sladerose.github.io:~$</span> <input type="text" id="command-input" autofocus />
+      </div>
 
-          <section id="projects">
-            <h2>Personal projects</h2>
-            <div class="project-list">
-              <!-- Project items will go here -->
-              <p>
-                Coming soon! Check out my
-                <a href="https://github.com/sladerose" target="_blank"
-                  >GitHub profile</a
-                >
-                for more.
-              </p>
-            </div>
-          </section>
-        </div>
+      <!-- Hidden content for JavaScript to display -->
+      <div id="content-about" style="display: none;">
+        <section id="hero">
+          <img src="https://github.com/sladerose.png" alt="Slade Rose" class="avatar" />
+          <h1>Slade Rose</h1>
+          <p>I live in Doonside, KZN. I am a multidisciplinary certified BTP Specialist, with SAP certifications in areas such as SAP Build Work Zone, Generative AI, and SAP Build. My passion for problem-solving has driven my work as a development lead, BTP specialist, and developer on various large projects for massive companies in the energy and oil and gas space.</p>
+          <p>Feel free to connect with me on <a href="https://www.linkedin.com/in/sladerose" target="_blank">LinkedIn</a> or reach out via email at your.email@example.com.</p>
+        </section>
+      </div>
+
+      <div id="content-projects" style="display: none;">
+        <h2>My GitHub Projects:</h2>
+        <ul id="projects-list-output">
+          <li>Loading projects...</li>
+        </ul>
       </div>
     </main>
-
-    <footer>
-      <div class="footer-left">
-        <p class="slogan">No special talents, just passionately curious.</p>
-      </div>
-      <div class="footer-right social-links">
-        <a href="https://github.com/sladerose" target="_blank"
-          ><img
-            src="https://img.icons8.com/ios-filled/50/000000/github.png"
-            alt="GitHub"
-            class="social-icon"
-        /></a>
-        <a href="https://www.linkedin.com/in/sladerose" target="_blank"
-          ><img
-            src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
-            alt="LinkedIn"
-            class="social-icon"
-        /></a>
-      </div>
-    </footer>
-
     <script src="script.js"></script>
   </body>
 </html>

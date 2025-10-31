@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+  --terminal-bg: #000;
+  --terminal-text: #0F0; /* Green terminal text */
+  --terminal-accent: #0A0; /* Slightly darker green for accents */
+  --spacing-unit: 1vh;
+  --font-size-base: 1rem;
+  --font-size-h1: 1.8rem;
+  --font-size-h2: 1.8rem;
+  --font-size-p: 1rem;
+  --avatar-size: 150px;
+}
 
 * {
   box-sizing: border-box;
@@ -9,327 +21,122 @@ html {
 }
 
 body {
-  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-family: 'Roboto Mono', monospace; /* Monospaced font for terminal look */
   margin: 0;
   padding: 0;
-  background-color: #ffffff; /* Pure white background */
-  color: #333; /* Darker text color for contrast */
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  line-height: 1.6;
+  font-size: var(--font-size-base);
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Set body to 100% of viewport height */
-  line-height: 1.6;
-  font-size: 1rem; /* Base font size for body text */
+  min-height: 100vh; /* Ensure body takes full viewport height */
 }
-
-header {
-  color: #333; /* Dark text for header */
-  padding: 1.5vh 2vw; /* Responsive padding */
-  display: flex;
-  justify-content: space-between; /* Space out logo and nav */
-  align-items: center;
-  flex-shrink: 0; /* Prevent header from shrinking */
-}
-
-.logo-text {
-  font-family: 'Atkinson Hyperlegible', sans-serif; /* Set to Atkinson Hyperlegible */
-  font-size: 1rem; /* Unified font size */
-  font-weight: normal; /* Unified font weight */
-  margin: 0;
-}
-
-
 
 main {
-  flex-grow: 1;
+  flex-grow: 1; /* Allow main to take available space */
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align items to the top */
-  padding: 2vh 5vw; /* Re-added vertical padding to main */
-  box-sizing: border-box;
+  flex-direction: column;
+  padding: calc(2 * var(--spacing-unit));
   width: 100%;
-  overflow-y: auto; /* Allow scrolling if content exceeds main area */
-}
-
-#hero p {
-  text-align: left; /* Left align the text */
-}
-
-.profile-content {
-  display: flex;
-  width: 100%;
-  max-width: 1200px; /* Max width for the content area */
-  gap: 40px; /* Space between columns */
-  align-items: flex-start; /* Align columns to the top */
-  padding-top: 2vh; /* Add top padding to the content wrapper */
-}
-
-.left-column {
-  flex: 0 0 250px; /* Fixed width for left column */
-  padding-right: 20px;
-  text-align: left; /* Align content to the left */
-}
-
-.right-column {
-  flex-grow: 1; /* Right column takes remaining space */
-}
-
-main section {
-  margin-top: 0; /* Ensure sections start at the top of their container */
-  margin-bottom: 4vh; /* Space between sections */
-  width: 100%;
-}
-
-main h2 {
-  font-size: 2rem; /* Larger heading for sections */
-  margin-top: 0; /* Ensure no top margin */
-  margin-bottom: 2vh; /* Re-add some bottom margin for spacing */
-  text-align: left; /* Align section headings to left */
-  line-height: 1; /* Remove extra space above text */
-}
-
-.right-column {
-  flex-grow: 1; /* Right column takes remaining space */
-  padding-top: 0; /* Ensure no top padding */
-}
-
-#hero {
-  text-align: left; /* Align avatar and text to the left */
-  padding: 0; /* Remove padding as it's handled by left-column */
-  margin-top: 0; /* Align to the top */
-}
-
-#personal-info {
-  text-align: left;
-  margin-top: 4vh;
-}
-
-#personal-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1vh;
-}
-
-#personal-info ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#personal-info ul li {
-  margin-bottom: 0.5vh;
-}
-
-.project-list, .experience-details {
+  max-width: 100%; /* Remove max-width constraint */
   margin: 0; /* Remove auto margin */
-  padding: 0; /* Removed horizontal padding as main now handles it */
-  width: 100%; /* Allow to take full width */
 }
 
-.experience-details ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin-bottom: 2vh;
+#terminal-output {
+  flex-grow: 1; /* Allow output to take available space */
+  overflow-y: auto; /* Enable scrolling for output */
+  padding: calc(2 * var(--spacing-unit));
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  word-break: break-word;
 }
 
-.experience-details ul li {
-  margin-bottom: 0.5vh;
+#terminal-input {
+  display: flex;
+  align-items: center;
+  padding: calc(1 * var(--spacing-unit)) calc(2 * var(--spacing-unit));
+  border-top: 1px solid var(--terminal-accent);
 }
 
-.experience-details p {
-  margin-bottom: 1vh;
+#prompt {
+  margin-right: 5px;
+  color: var(--terminal-accent);
+}
+
+#command-input {
+  background: none;
+  border: none;
+  color: var(--terminal-text);
+  font-family: 'Roboto Mono', monospace;
+  font-size: var(--font-size-base);
+  flex-grow: 1;
+  outline: none;
+  caret-color: var(--terminal-text); /* Blinking cursor */
+}
+
+/* Blinking cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--terminal-text); }
+}
+
+#command-input {
+  border-right: .08em solid var(--terminal-text); /* The actual cursor */
+  animation: blink-caret .75s step-end infinite;
+}
+
+section {
+  margin-bottom: calc(4 * var(--spacing-unit)); /* Space between sections */
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  margin-bottom: calc(2 * var(--spacing-unit));
+  text-align: left;
+  line-height: 1;
+  color: var(--terminal-text);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  margin-top: 0;
+  margin-bottom: calc(2 * var(--spacing-unit));
+  text-align: left;
+  line-height: 1;
+  color: var(--terminal-text);
+}
+
+p {
+  text-align: left;
+  margin-bottom: var(--spacing-unit);
+  color: var(--terminal-text);
 }
 
 .avatar {
-  width: 15vw; /* Responsive width */
-  height: 15vw; /* Responsive height */
-  max-width: 150px; /* Max size for avatar */
-  max-height: 150px; /* Max size for avatar */
-  border-radius: 50%;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 0; /* Remove border-radius for techy look */
   object-fit: cover;
-  margin-bottom: 2vh; /* Responsive margin */
-  margin-top: 0; /* Ensure no top margin */
-  border: 3px solid #3498db;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: calc(2 * var(--spacing-unit));
+  margin-top: 0;
+  border: 1px solid var(--terminal-accent); /* Simple border */
+  box-shadow: none; /* Remove shadow */
   vertical-align: top;
-  display: block; /* Make it a block element */
-  margin-left: 0; /* Align to the left */
-  margin-right: auto; /* Push to the left */
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
 }
 
-footer {
-  color: #333; /* Dark text for footer */
-  padding: 1.5vh 2vw; /* Responsive padding */
+.social-links {
+  margin-bottom: calc(2 * var(--spacing-unit));
   display: flex;
-  justify-content: space-between; /* Space out copyright and social links */
-  align-items: center;
-  flex-shrink: 0; /* Prevent footer from shrinking */
-}
-
-.footer-left p {
-  margin: 0;
-  font-size: 1rem; /* Set to 1rem for consistency with body text */
-}
-
-.footer-left .slogan {
-  margin-top: 0.5vh; /* Responsive margin */
-  font-size: 1rem; /* Set to 1rem for consistency with body text */
-}
-
-.header-right a {
-  margin-left: 2vw; /* Responsive margin */
-  text-decoration: none;
-  color: #333; /* Initial color */
-  font-weight: normal; /* Unified font weight */
-  font-size: 1rem; /* Match logo text size */
-  font-family: 'Atkinson Hyperlegible', sans-serif; /* Match logo text font */
-  transition: color 0.3s ease; /* Smooth color transition on hover */
-}
-
-.header-right a:hover {
-  color: #3498db; /* Blue accent color on hover */
+  gap: 10px;
 }
 
 .social-icon {
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Adjust size as needed */
-  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  filter: invert(1) hue-rotate(120deg); /* Make icons green */
 }
 
-.project-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.project-item {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: left;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  display: flex; /* Use flexbox for content alignment */
-  flex-direction: column; /* Stack content vertically */
-  justify-content: space-between; /* Push languages to the bottom */
-  text-decoration: none; /* Remove underline from the whole card link */
-  color: inherit; /* Inherit text color */
-  border-bottom: 3px solid #3498db; /* Accent color */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
-}
-
-.project-item:hover {
-  transform: translateY(-5px); /* Lift the card slightly */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Increase shadow on hover */
-}
-
-.project-item h3 {
-  font-size: 1.2rem;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.project-item p {
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-  flex-grow: 1; /* Allow description to take up available space */
-}
-
-.languages-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px; /* Space between pills */
-  margin-top: 10px; /* Space above pills */
-  justify-content: flex-start; /* Align pills to the left */
-}
-
-.language-pill {
-  background-color: #e0e0e0;
-  color: #555;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  white-space: nowrap; /* Prevent text from wrapping inside the pill */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  .profile-content {
-    flex-direction: column; /* Stack columns vertically */
-    gap: 20px; /* Space between stacked sections */
-  }
-
-  .left-column {
-    flex: none; /* Remove fixed width */
-    width: 100%; /* Take full width */
-    padding-right: 0;
-  }
-
-  .right-column {
-    flex-grow: 1; /* Allow to grow */
-    width: 100%; /* Take full width */
-  }
-
-  main h2 {
-    text-align: center; /* Center section headings on small screens */
-  }
-
-  #personal-info {
-    text-align: center;
-  }
-
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .header-right a {
-    margin: 1vh 1vw;
-  }
-
-  .logo-text {
-    margin-bottom: 1vh;
-  }
-
-  footer {
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    padding: 1em 10px; /* Fixed padding for smaller screens */
-  }
-
-  .footer-left,
-  .footer-right.social-links {
-    text-align: center; /* Center text */
-    margin-bottom: 1vh;
-  }
-
-  .footer-right.social-links {
-    justify-content: center; /* Center social links when stacked */
-    margin-left: 0; /* Remove auto margin */
-  }
-
-  .social-icon {
-    width: 25px; /* Smaller size for mobile */
-    height: 25px;
-  }
-
-  .avatar {
-    width: 25vw;
-    height: 25vw;
-  }
-
-  .logo-text {
-    font-size: 5vw;
-  }
-
-  .header-right a {
-    font-size: 3vw;
-  }
-
-  .footer-left p {
-    font-size: 3vw;
-  }
-
-  .project-list {
-    grid-template-columns: 1fr; /* Single column on small screens */
-  }
-}
+/* Remove all previous media queries as terminal handles responsiveness */
