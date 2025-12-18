@@ -1,142 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-
 :root {
-  --terminal-bg: #000;
-  --terminal-text: #0F0; /* Green terminal text */
-  --terminal-accent: #0A0; /* Slightly darker green for accents */
-  --spacing-unit: 1vh;
-  --font-size-base: 1rem;
-  --font-size-h1: 1.8rem;
-  --font-size-h2: 1.8rem;
-  --font-size-p: 1rem;
-  --avatar-size: 150px;
+  --bg-color: #111111;
+  --text-color: #f0f0f0;
+  --accent-color: #f0f0f0;
+  /* Default accent, changes via JS */
+  --font-main: 'Inter', sans-serif;
+  --max-width: 720px;
 }
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  font-size: 16px; /* Base font size */
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: 'Roboto Mono', monospace; /* Monospaced font for terminal look */
-  margin: 0;
-  padding: 0;
-  background-color: var(--terminal-bg);
-  color: var(--terminal-text);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-main);
   line-height: 1.6;
-  font-size: var(--font-size-base);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure body takes full viewport height */
+  -webkit-font-smoothing: antialiased;
+  padding: 1rem;
 }
 
-main {
-  flex-grow: 1; /* Allow main to take available space */
-  display: flex;
-  flex-direction: column;
-  padding: calc(2 * var(--spacing-unit));
-  width: 100%;
-  max-width: 100%; /* Remove max-width constraint */
-  margin: 0; /* Remove auto margin */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-top: 10vh;
+  padding-bottom: 5vh;
 }
 
-#terminal-output {
-  flex-grow: 1; /* Allow output to take available space */
-  overflow-y: auto; /* Enable scrolling for output */
-  padding: calc(2 * var(--spacing-unit));
-  white-space: pre-wrap; /* Preserve whitespace and wrap text */
-  word-break: break-word;
-}
-
-#terminal-input {
-  display: flex;
-  align-items: center;
-  padding: calc(1 * var(--spacing-unit)) calc(2 * var(--spacing-unit));
-  border-top: 1px solid var(--terminal-accent);
-}
-
-#prompt {
-  margin-right: 5px;
-  color: var(--terminal-accent);
-}
-
-#command-input {
-  background: none;
-  border: none;
-  color: var(--terminal-text);
-  font-family: 'Roboto Mono', monospace;
-  font-size: var(--font-size-base);
-  flex-grow: 1;
-  outline: none;
-  caret-color: var(--terminal-text); /* Blinking cursor */
-}
-
-/* Blinking cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--terminal-text); }
-}
-
-#command-input {
-  border-right: .08em solid var(--terminal-text); /* The actual cursor */
-  animation: blink-caret .75s step-end infinite;
-}
-
-section {
-  margin-bottom: calc(4 * var(--spacing-unit)); /* Space between sections */
+/* HEADER */
+header {
+  margin-bottom: 5rem;
 }
 
 h1 {
-  font-size: var(--font-size-h1);
-  margin-bottom: calc(2 * var(--spacing-unit));
-  text-align: left;
-  line-height: 1;
-  color: var(--terminal-text);
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: -0.05rem;
+  margin-bottom: 0.5rem;
 }
 
-h2 {
-  font-size: var(--font-size-h2);
-  margin-top: 0;
-  margin-bottom: calc(2 * var(--spacing-unit));
-  text-align: left;
-  line-height: 1;
-  color: var(--terminal-text);
+.subtitle {
+  font-weight: 300;
+  opacity: 0.7;
+  font-size: 1.1rem;
 }
 
-p {
-  text-align: left;
-  margin-bottom: var(--spacing-unit);
-  color: var(--terminal-text);
+.accent {
+  display: inline-block;
 }
 
-.avatar {
-  width: var(--avatar-size);
-  height: var(--avatar-size);
-  border-radius: 0; /* Remove border-radius for techy look */
-  object-fit: cover;
-  margin-bottom: calc(2 * var(--spacing-unit));
-  margin-top: 0;
-  border: 1px solid var(--terminal-accent); /* Simple border */
-  box-shadow: none; /* Remove shadow */
-  vertical-align: top;
-  display: block;
-  margin-left: 0;
-  margin-right: auto;
+/* SECTIONS */
+section {
+  margin-bottom: 4rem;
 }
 
-.social-links {
-  margin-bottom: calc(2 * var(--spacing-unit));
+.section-label {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.5;
+  margin-bottom: 1.5rem;
+}
+
+.content-block {
+  max-width: 90%;
+}
+
+.content-block p {
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+/* LINKS LIST */
+ul.link-list {
+  list-style: none;
+}
+
+ul.link-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
   display: flex;
-  gap: 10px;
+  align-items: flex-start;
+  /* Align top if text wraps */
+  gap: 0.8rem;
 }
 
-.social-icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(1) hue-rotate(120deg); /* Make icons green */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  border-bottom: 1px solid transparent;
 }
 
-/* Remove all previous media queries as terminal handles responsiveness */
+a:hover {
+  opacity: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-desc {
+  font-size: 1rem;
+  /* Match body/paragraph size */
+  font-weight: 300;
+  /* Match .content-block p */
+  opacity: 0.9;
+  /* Close to full opacity like paragraphs */
+  margin-top: 0.2rem;
+  line-height: 1.5;
+}
+
+/* HOVER INTERACTIONS */
+.link-arrow {
+  display: inline-block;
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--text-color);
+  transition: color 0.1s;
+}
+
+/* Utiltiy */
+.hidden {
+  display: none;
+}

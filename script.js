@@ -1,125 +1,113 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const terminalOutput = document.getElementById('terminal-output');
-    const commandInput = document.getElementById('command-input');
-    const promptSpan = document.getElementById('prompt');
+document.addEventListener('DOMContentLoaded', () => {
 
-    let commandHistory = [];
-    let historyIndex = -1;
+    // --- 1. GITHUB PROJECTS ---
+    const projectList = document.getElementById('project-list');
 
-    const contentAbout = document.getElementById('content-about');
-    const contentProjects = document.getElementById('content-projects');
-
-    function printOutput(message, isHtml = false) {
-        const line = document.createElement('div');
-        if (isHtml) {
-            line.innerHTML = message;
-        } else {
-            line.textContent = message;
-        }
-        terminalOutput.appendChild(line);
-        terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll to bottom
-    }
-
-    function clearTerminal() {
-        terminalOutput.innerHTML = '';
-    }
-
-    function displayHelp() {
-        printOutput('Available commands:');
-        printOutput('  about    - Display information about Slade Rose.');
-        printOutput('  projects - List GitHub projects.');
-        printOutput('  contact  - Display contact information.');
-        printOutput('  clear    - Clear the terminal screen.');
-        printOutput('  help     - Show this help message.');
-    }
-
-    function displayContact() {
-        printOutput('You can connect with me on LinkedIn or reach out via email.');
-        printOutput('LinkedIn: https://www.linkedin.com/in/sladerose');
-        printOutput('Email: your.email@example.com'); // Placeholder
-    }
-
-    async function displayProjects() {
-        printOutput('Fetching projects from GitHub...');
+    async function fetchProjects() {
         try {
-            const response = await fetch('https://api.github.com/users/sladerose/repos');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
+            const res = await fetch('https://api.github.com/users/sladerose/repos?sort=updated');
+            const data = await res.json();
 
-            if (data.length === 0) {
-                printOutput('No public projects found on GitHub.');
+            if (!Array.isArray(data)) {
+                projectList.innerHTML = '<li>Error loading projects.</li>';
                 return;
             }
 
-            printOutput('My GitHub Projects:');
-            data.forEach(project => {
-                printOutput(`  - ${project.name}`);
-                printOutput(`    Description: ${project.description || 'No description provided.'}`);
-                printOutput(`    URL: ${project.html_url}`);
-                printOutput(''); // Empty line for spacing
+            // Filter forks if you want, or just show top 6
+            const topProjects = data.slice(0, 6);
+
+            if (topProjects.length === 0) {
+                projectList.innerHTML = '<li>No projects found.</li>';
+                return;
+            }
+
+            projectList.innerHTML = ''; // Clear loading text
+
+            topProjects.forEach(repo => {
+                const li = document.createElement('li');
+
+                // Arrow
+                const arrow = document.createElement('span');
+                arrow.classList.add('link-arrow');
+                arrow.textContent = '/>';
+
+                // Content Wrapper
+                const contentDiv = document.createElement('div');
+                contentDiv.classList.add('project-content');
+
+                // Link (Name)
+                const link = document.createElement('a');
+                link.href = repo.html_url;
+                link.target = '_blank';
+                link.textContent = repo.name; // Preserve case (e.g. FusionAnalyzer)
+                // link.classList.add('project-title');
+
+                // Description
+                const desc = document.createElement('span');
+                desc.classList.add('project-desc');
+                desc.textContent = repo.description ? ` — ${repo.description}` : '';
+
+                contentDiv.appendChild(link);
+                contentDiv.appendChild(desc);
+
+                li.appendChild(arrow);
+                li.appendChild(contentDiv);
+                projectList.appendChild(li);
+
+                attachHoverEffect(li, arrow);
             });
-        } catch (error) {
-            console.error('Error fetching GitHub projects:', error);
-            printOutput('Failed to load projects. Please try again later.');
+
+        } catch (e) {
+            console.error(e);
+            if (projectList) projectList.innerHTML = '<li>Error connecting to GitHub.</li>';
         }
     }
 
-    function handleCommand(command) {
-        const lowerCommand = command.toLowerCase().trim();
-        printOutput(promptSpan.textContent + ' ' + command);
+    fetchProjects();
 
-        switch (lowerCommand) {
-            case 'about':
-                printOutput(contentAbout.innerHTML, true);
-                break;
-            case 'projects':
-                displayProjects();
-                break;
-            case 'clear':
-                clearTerminal();
-                break;
-            case 'help':
-                displayHelp();
-                break;
-            case 'contact':
-                displayContact();
-                break;
-            case '':
-                break;
-            default:
-                printOutput(`Command not found: ${command}. Type 'help' for available commands.`);
-        }
+
+    // --- 2. THE "SLASH" COLOR EFFECT ---
+    // Why? rohandharane.com has this cool effect where the symbols cycle colors on hover.
+
+    const colors = [
+        '#FF0000', // Red
+        '#00FF00', // Green
+        '#0000FF', // Blue
+        '#FFFF00', // Yellow
+        '#00FFFF', // Cyan
+        '#FF00FF', // Magenta
+        '#FF5733', // Orange
+        '#33FF57'  // Lime
+    ];
+
+    function attachHoverEffect(container, targetElement) {
+        let interval;
+
+        container.addEventListener('mouseenter', () => {
+            // Cycle colors rapidly
+            interval = setInterval(() => {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                targetElement.style.color = randomColor;
+            }, 100); // Change every 100ms
+        });
+
+        container.addEventListener('mouseleave', () => {
+            clearInterval(interval);
+            targetElement.style.color = 'inherit'; // Reset to white
+        });
     }
 
-    commandInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            const command = commandInput.value;
-            commandHistory.unshift(command); // Add to history
-            historyIndex = -1; // Reset history index
-            handleCommand(command);
-            commandInput.value = ''; // Clear input
-        } else if (event.key === 'ArrowUp') {
-            event.preventDefault();
-            if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
-                historyIndex++;
-                commandInput.value = commandHistory[historyIndex];
-            }
-        } else if (event.key === 'ArrowDown') {
-            event.preventDefault();
-            if (historyIndex > 0) {
-                historyIndex--;
-                commandInput.value = commandHistory[historyIndex];
-            } else {
-                historyIndex = -1;
-                commandInput.value = '';
-            }
-        }
+    // Attach to existing static links in /connect
+    document.querySelectorAll('#connect li').forEach(li => {
+        const arrow = li.querySelector('.link-arrow');
+        if (arrow) attachHoverEffect(li, arrow);
     });
 
-    // Initial welcome message
-    printOutput('Welcome to Slade Rose\'s personal terminal!');
-    printOutput('Type \'help\' to see available commands.');
-    printOutput('');
+    // Attach to main title logic?
+    const titleHeader = document.querySelector('header');
+    const titleSlash = document.querySelector('h1 .accent');
+    if (titleHeader && titleSlash) {
+        attachHoverEffect(titleHeader, titleSlash);
+    }
+
 });

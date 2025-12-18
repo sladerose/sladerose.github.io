@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Slade Rose - Personal Website</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <main>
-      <div id="terminal-output">
-        <!-- Terminal output will be rendered here by JavaScript -->
-      </div>
-      <div id="terminal-input">
-        <span id="prompt">user@sladerose.github.io:~$</span> <input type="text" id="command-input" autofocus />
-      </div>
 
-      <!-- Hidden content for JavaScript to display -->
-      <div id="content-about" style="display: none;">
-        <section id="hero">
-          <img src="https://github.com/sladerose.png" alt="Slade Rose" class="avatar" />
-          <h1>Slade Rose</h1>
-          <p>I live in Doonside, KZN. I am a multidisciplinary certified BTP Specialist, with SAP certifications in areas such as SAP Build Work Zone, Generative AI, and SAP Build. My passion for problem-solving has driven my work as a development lead, BTP specialist, and developer on various large projects for massive companies in the energy and oil and gas space.</p>
-          <p>Feel free to connect with me on <a href="https://www.linkedin.com/in/sladerose" target="_blank">LinkedIn</a> or reach out via email at your.email@example.com.</p>
-        </section>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slade Rose / Developer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
 
-      <div id="content-projects" style="display: none;">
-        <h2>My GitHub Projects:</h2>
-        <ul id="projects-list-output">
-          <li>Loading projects...</li>
-        </ul>
+<body>
+  <main class="container">
+    <header>
+      <h1>slade rose <span class="accent">/</span></h1>
+      <p class="subtitle">BTP Specialist & Developer</p>
+    </header>
+
+    <section id="about">
+      <h2 class="section-label">/about</h2>
+      <div class="content-block">
+        <p>I live in Doonside, KZN. I am a multidisciplinary certified BTP Specialist, with SAP certifications in areas
+          such as SAP Build Work Zone, Generative AI, and SAP Build.</p>
+        <p>My passion for problem-solving has driven my work as a development lead on various large projects for massive
+          companies in the energy and oil & gas space.</p>
       </div>
-    </main>
-    <script src="script.js"></script>
-  </body>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-label">/projects</h2>
+      <ul class="link-list" id="project-list">
+        <li>Loading projects...</li>
+      </ul>
+    </section>
+
+    <section id="connect">
+      <h2 class="section-label">/connect</h2>
+      <ul class="link-list">
+        <li>
+          <span class="link-arrow">/></span>
+          <a href="https://www.linkedin.com/in/sladerose" target="_blank">LinkedIn</a>
+        </li>
+        <li>
+          <span class="link-arrow">/></span>
+          <a href="https://github.com/sladerose" target="_blank">GitHub</a>
+        </li>
+      </ul>
+    </section>
+
+    <footer style="margin-top: 4rem; opacity: 0.5; font-size: 0.8rem;">
+      <p>&copy; 2025 Slade Rose.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
