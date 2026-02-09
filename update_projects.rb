@@ -17,13 +17,22 @@ rescue => e
   []
 end
 
+def fetch_languages(url)
+  uri = URI(url)
+  response = Net::HTTP.get(uri)
+  JSON.parse(response).keys
+rescue => e
+  puts "Error fetching languages: #{e.message}"
+  []
+end
+
 def format_project(repo)
   name = repo['name']
   url = repo['html_url']
-  language = repo['language']
+  languages = fetch_languages(repo['languages_url'])
   description = repo['description'] ? " — #{repo['description']}" : ""
   
-  lang_html = language ? "<span class=\"project-lang\">#{language}</span>" : ""
+  lang_html = languages.map { |lang| "<span class=\"project-lang\">#{lang}</span>" }.join("\n              ")
   
   <<-HTML
         <li>
@@ -31,7 +40,9 @@ def format_project(repo)
           <div class="project-content">
             <div class="project-header">
               <a href="#{url}" target="_blank">#{name}</a>
-              #{lang_html}
+              <div class="project-langs">
+                #{lang_html}
+              </div>
             </div>
             <span class="project-desc">#{description}</span>
           </div>
