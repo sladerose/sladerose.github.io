@@ -103,6 +103,22 @@ a:hover {
   flex-direction: column;
 }
 
+.project-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.project-lang {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  opacity: 0.4;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
 .project-desc {
   font-size: 1rem;
   /* Match body/paragraph size */
@@ -125,15 +141,41 @@ a:hover {
 
 /* Color cycling animation */
 @keyframes colorCycle {
-  0% { color: #FF0000; }
-  12.5% { color: #00FF00; }
-  25% { color: #0000FF; }
-  37.5% { color: #FFFF00; }
-  50% { color: #00FFFF; }
-  62.5% { color: #FF00FF; }
-  75% { color: #FF5733; }
-  87.5% { color: #33FF57; }
-  100% { color: #FF0000; }
+  0% {
+    color: #FF0000;
+  }
+
+  12.5% {
+    color: #00FF00;
+  }
+
+  25% {
+    color: #0000FF;
+  }
+
+  37.5% {
+    color: #FFFF00;
+  }
+
+  50% {
+    color: #00FFFF;
+  }
+
+  62.5% {
+    color: #FF00FF;
+  }
+
+  75% {
+    color: #FF5733;
+  }
+
+  87.5% {
+    color: #33FF57;
+  }
+
+  100% {
+    color: #FF0000;
+  }
 }
 
 /* Trigger animation on hover of parent containers */

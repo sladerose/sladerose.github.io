@@ -20,13 +20,19 @@ end
 def format_project(repo)
   name = repo['name']
   url = repo['html_url']
+  language = repo['language']
   description = repo['description'] ? " — #{repo['description']}" : ""
+  
+  lang_html = language ? "<span class=\"project-lang\">#{language}</span>" : ""
   
   <<-HTML
         <li>
           <span class="link-arrow">/></span>
           <div class="project-content">
-            <a href="#{url}" target="_blank">#{name}</a>
+            <div class="project-header">
+              <a href="#{url}" target="_blank">#{name}</a>
+              #{lang_html}
+            </div>
             <span class="project-desc">#{description}</span>
           </div>
         </li>
