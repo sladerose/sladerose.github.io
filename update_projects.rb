@@ -66,6 +66,14 @@ content = File.read(FILE_PATH)
 regex = Regexp.new("#{Regexp.escape(START_MARKER)}.*?#{Regexp.escape(END_MARKER)}", Regexp::MULTILINE)
 updated_content = content.sub(regex, "#{START_MARKER}\n#{project_html}        #{END_MARKER}")
 
-# Write back to file
 File.write(FILE_PATH, updated_content)
 puts "Updated #{FILE_PATH} with #{projects.size} projects."
+
+# Update copyright year
+current_year = Time.now.year
+copyright_regex = /&copy; \d{4} Slade Rose/
+if content.match?(copyright_regex)
+  new_content = File.read(FILE_PATH).sub(copyright_regex, "&copy; #{current_year} Slade Rose")
+  File.write(FILE_PATH, new_content)
+  puts "Updated copyright year to #{current_year}."
+end
