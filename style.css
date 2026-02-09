@@ -123,6 +123,25 @@ a:hover {
   transition: color 0.1s;
 }
 
+/* Color cycling animation */
+@keyframes colorCycle {
+  0% { color: #FF0000; }
+  12.5% { color: #00FF00; }
+  25% { color: #0000FF; }
+  37.5% { color: #FFFF00; }
+  50% { color: #00FFFF; }
+  62.5% { color: #FF00FF; }
+  75% { color: #FF5733; }
+  87.5% { color: #33FF57; }
+  100% { color: #FF0000; }
+}
+
+/* Trigger animation on hover of parent containers */
+li:hover .link-arrow,
+header:hover .accent {
+  animation: colorCycle 0.8s infinite steps(8);
+}
+
 /* Utiltiy */
 .hidden {
   display: none;
