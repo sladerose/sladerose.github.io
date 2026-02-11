@@ -30,9 +30,9 @@ def format_project(repo)
   name = repo['name']
   url = repo['html_url']
   languages = fetch_languages(repo['languages_url'])
-  description = repo['description'] || ""
+  description = repo['description'] ? " — #{repo['description']}" : ""
   
-  lang_html = languages.map { |lang| "<span class=\"project-lang\">#{lang}</span>" }.join("\n                ")
+  lang_html = languages.map { |lang| "<span class=\"project-lang\">#{lang}</span>" }.join("\n              ")
   
   <<-HTML
         <li>
