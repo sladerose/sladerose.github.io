@@ -188,8 +188,11 @@ a:hover {
 }
 
 /* Trigger animation on hover of parent containers */
-li:hover .link-arrow,
-header:hover .accent {
+.accent {
+  animation: colorCycle 0.8s infinite steps(8);
+}
+
+li:hover .link-arrow {
   animation: colorCycle 0.8s infinite steps(8);
 }
 
