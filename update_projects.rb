@@ -7,30 +7,38 @@ USER = 'sladerose'
 FILE_PATH = 'index.html'
 START_MARKER = '<!-- PROJECTS_START -->'
 END_MARKER = '<!-- PROJECTS_END -->'
+USER_AGENT = 'sladerose-portfolio-updater'
 
-def fetch_projects(user)
-  uri = URI("https://api.github.com/users/#{user}/repos?sort=updated")
-  response = Net::HTTP.get(uri)
-  JSON.parse(response)
-rescue => e
-  puts "Error fetching projects: #{e.message}"
-  []
-end
-
-def fetch_languages(url)
+def fetch_json(url)
   uri = URI(url)
-  response = Net::HTTP.get(uri)
-  JSON.parse(response).keys
+  request = Net::HTTP::Get.new(uri)
+  request['User-Agent'] = USER_AGENT
+  
+  response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+    http.request(request)
+  end
+
+  if response.is_a?(Net::HTTPSuccess)
+    JSON.parse(response.body)
+  else
+    puts "Warning: API request failed for #{url} with status #{response.code} #{response.message}"
+    nil
+  end
 rescue => e
-  puts "Error fetching languages: #{e.message}"
-  []
+  puts "Error fetching JSON from #{url}: #{e.message}"
+  nil
 end
 
 def format_project(repo)
   name = repo['name']
   url = repo['html_url']
-  languages = fetch_languages(repo['languages_url'])
-  description = repo['description'] ? " — #{repo['description']}" : ""
+  languages_url = repo['languages_url']
+  
+  languages_data = fetch_json(languages_url) || {}
+  languages = languages_data.keys
+  
+  description_raw = repo['description']
+  description = (description_raw && !description_raw.empty?) ? " — #{description_raw}" : ""
   
   lang_html = languages.map { |lang| "<span class=\"project-lang\">#{lang}</span>" }.join("\n              ")
   
@@ -50,13 +58,15 @@ def format_project(repo)
   HTML
 end
 
-projects = fetch_projects(USER).slice(0, 5)
+puts "Fetching projects for #{USER}..."
+projects_data = fetch_json("https://api.github.com/users/#{USER}/repos?sort=updated")
 
-if projects.empty?
+if !projects_data || projects_data.empty?
   puts "No projects found or error fetching."
-  exit
+  exit 1
 end
 
+projects = projects_data.slice(0, 5)
 project_html = projects.map { |repo| format_project(repo) }.join
 
 # Read index.html
@@ -73,7 +83,8 @@ puts "Updated #{FILE_PATH} with #{projects.size} projects."
 current_year = Time.now.year
 copyright_regex = /&copy; \d{4} Slade Rose/
 if content.match?(copyright_regex)
-  new_content = File.read(FILE_PATH).sub(copyright_regex, "&copy; #{current_year} Slade Rose")
-  File.write(FILE_PATH, new_content)
+  fresh_content = File.read(FILE_PATH)
+  final_content = fresh_content.sub(copyright_regex, "&copy; #{current_year} Slade Rose")
+  File.write(FILE_PATH, final_content)
   puts "Updated copyright year to #{current_year}."
 end
