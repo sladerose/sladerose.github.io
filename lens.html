@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lens | Slade Rose</title>
+  <meta name="description" content="A visual log — surfing the KZN coast and trail running. Captured through the lens of Slade Rose.">
+  <meta property="og:title" content="Lens | Slade Rose">
+  <meta property="og:description" content="A visual log of surfing the KZN coast and trail running in South Africa.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sladerose.github.io/lens.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a0a0a'/><text x='50' y='72' font-size='70' font-family='sans-serif' font-weight='900' fill='%23ff0055' text-anchor='middle'>S</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .lens-nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 200;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .lens-nav:hover {
+      color: var(--color-accent-brand);
+    }
+
+    .photo-tile {
+      padding: 0;
+      overflow: hidden;
+      cursor: pointer;
+      justify-content: flex-end;
+    }
+    .photo-tile img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      filter: grayscale(20%);
+    }
+    .photo-tile:hover img {
+      transform: scale(1.04);
+      filter: grayscale(0%);
+    }
+    .photo-overlay {
+      position: relative;
+      z-index: 1;
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+      width: 100%;
+    }
+    .photo-label {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+    }
+    .photo-caption {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--color-accent-brand);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 0.2rem;
+    }
+
+    /* Placeholder shown until real images are added */
+    .photo-placeholder {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--color-bg-base),
+        var(--color-bg-base) 4px,
+        var(--color-bg-elevated) 4px,
+        var(--color-bg-elevated) 8px
+      );
+      cursor: default;
+      justify-content: center;
+      align-items: center;
+    }
+    .photo-placeholder:hover {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--color-bg-base),
+        var(--color-bg-base) 4px,
+        var(--color-bg-elevated) 4px,
+        var(--color-bg-elevated) 8px
+      );
+    }
+    .placeholder-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 25vw);
+        overflow-y: auto;
+        height: auto;
+      }
+    }
+    @media (max-width: 768px) {
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 50vw);
+        height: auto;
+      }
+      .photo-tile {
+        height: auto;
+        padding: 0;
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html" class="lens-nav">← /home</a>
+
+  <main class="grid-container">
+
+    <!-- PHOTO TILES — replace src/alt/label/caption with your own images -->
+
+    <div class="tile photo-tile" style="--delay: 0">
+      <img src="https://picsum.photos/seed/surf1/800/600" alt="KZN coast">
+      <div class="photo-overlay">
+        <div class="photo-label">SURF // KZN_COAST</div>
+        <div class="photo-caption">EARLY_MORNING_SESSION</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 1">
+      <img src="https://picsum.photos/seed/trail2/800/600" alt="Trail run">
+      <div class="photo-overlay">
+        <div class="photo-label">TRAIL // DRAKENSBERG</div>
+        <div class="photo-caption">RIDGE_LINE_RUN</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 2">
+      <img src="https://picsum.photos/seed/ocean3/800/600" alt="Ocean swell">
+      <div class="photo-overlay">
+        <div class="photo-label">SURF // BLUFF_POINT</div>
+        <div class="photo-caption">OFFSHORE_SWELL</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 3">
+      <img src="https://picsum.photos/seed/nature4/800/600" alt="Nature">
+      <div class="photo-overlay">
+        <div class="photo-label">TRAIL // UMGENI_VALLEY</div>
+        <div class="photo-caption">GOLDEN_HOUR</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 4">
+      <img src="https://picsum.photos/seed/wave5/800/600" alt="Wave">
+      <div class="photo-overlay">
+        <div class="photo-label">SURF // CAVE_ROCK</div>
+        <div class="photo-caption">SET_WAVE</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 5">
+      <img src="https://picsum.photos/seed/forest6/800/600" alt="Forest trail">
+      <div class="photo-overlay">
+        <div class="photo-label">TRAIL // SHONGWENI</div>
+        <div class="photo-caption">SINGLE_TRACK</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 6">
+      <img src="https://picsum.photos/seed/coast7/800/600" alt="Coastline">
+      <div class="photo-overlay">
+        <div class="photo-label">SURF // ANSTEYS_BEACH</div>
+        <div class="photo-caption">DAWN_PATROL</div>
+      </div>
+    </div>
+
+    <div class="tile photo-tile" style="--delay: 7">
+      <img src="https://picsum.photos/seed/mountain8/800/600" alt="Mountain">
+      <div class="photo-overlay">
+        <div class="photo-label">TRAIL // ASSEGAI</div>
+        <div class="photo-caption">SUMMIT_PUSH</div>
+      </div>
+    </div>
+
+  </main>
+</body>
+
+</html>

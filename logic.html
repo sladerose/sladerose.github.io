@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic | Slade Rose</title>
+  <meta name="description" content="Thinking on radical simplicity, enterprise architecture, and building resilient systems with zero waste.">
+  <meta property="og:title" content="Logic | Slade Rose">
+  <meta property="og:description" content="Thinking on radical simplicity, enterprise architecture, and building resilient systems with zero waste.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sladerose.github.io/logic.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a0a0a'/><text x='50' y='72' font-size='70' font-family='sans-serif' font-weight='900' fill='%23ff0055' text-anchor='middle'>S</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .logic-grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+    .entry-date {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="grid-container logic-grid">
+
+    <!-- TILE 00: BACK TO HOME -->
+    <a href="index.html" class="tile tile-category" style="--delay: 0">
+      <div class="card-meta mono">NAV // 00.1</div>
+      <h2>/home</h2>
+      <p>Return to the central command node.</p>
+      <div class="tile-status mono">DIRECTION // INBOUND</div>
+    </a>
+
+    <!-- TILE 01: HEADER -->
+    <div class="tile" style="--delay: 1">
+      <div class="card-meta mono">LOGIC // 01.1</div>
+      <h2>/logic</h2>
+      <p>Notes on architecture, simplicity, and building things that last.</p>
+      <div class="tile-status mono">MODE // OPTIMIZED</div>
+    </div>
+
+    <!-- ENTRY 01 -->
+    <div class="tile" style="--delay: 2">
+      <div class="card-meta mono">ENTRY // 01.1</div>
+      <span class="entry-date">2025 — PHILOSOPHY</span>
+      <h3>The Cost of Complexity</h3>
+      <p>Every abstraction is a debt paid with interest. In enterprise SAP ecosystems, complexity is often dressed as capability — another layer, another integration point. But complexity compounds. The system that took six months to build takes eighteen to debug.</p>
+      <div class="tile-status mono">THREAD // SIMPLICITY</div>
+    </div>
+
+    <!-- ENTRY 02 -->
+    <div class="tile" style="--delay: 3">
+      <div class="card-meta mono">ENTRY // 01.2</div>
+      <span class="entry-date">2025 — ARCHITECTURE</span>
+      <h3>Two Modes, One Brain</h3>
+      <p>My professional world is SAP BTP — CAP, OData, enterprise compliance at scale. My personal world is the opposite: Rails, Hotwire, ship it on a weekend. The contrast isn't a contradiction. Working both ends sharpens your judgement about where each approach earns its keep.</p>
+      <div class="tile-status mono">THREAD // ARCHITECTURE</div>
+    </div>
+
+    <!-- ENTRY 03 -->
+    <div class="tile" style="--delay: 4">
+      <div class="card-meta mono">ENTRY // 01.3</div>
+      <span class="entry-date">2025 — PROCESS</span>
+      <h3>Build It, Then Delete Half</h3>
+      <p>The first version is always too big. I treat the initial build as a draft — get it working, then remove everything that isn't load-bearing. This site has no JavaScript on the main pages. Not because JS is bad, because it wasn't needed.</p>
+      <div class="tile-status mono">THREAD // PROCESS</div>
+    </div>
+
+    <!-- ENTRY 04 -->
+    <div class="tile" style="--delay: 5">
+      <div class="card-meta mono">ENTRY // 01.4</div>
+      <span class="entry-date">2025 — ENERGY SECTOR</span>
+      <h3>When Uptime Is Non-Negotiable</h3>
+      <p>Working in the energy sector changes how you think about resilience. These systems underpin critical infrastructure — outages aren't inconvenient, they're consequential. That pressure sharpens your instincts for failure modes and the boring reliability that never makes a conference talk.</p>
+      <div class="tile-status mono">THREAD // RESILIENCE</div>
+    </div>
+
+  </main>
+</body>
+
+</html>
