@@ -65,6 +65,25 @@ Dark mode only. No light theme.
 - Texture: fixed SVG fractal-noise overlay at 0.02 opacity over the whole
   viewport (subtle grain, not a visible effect).
 
+## Navigation
+
+Astro migration adds a persistent chrome, absent from the original plain-HTML
+pages (which used a small fixed "back to home" link per sub-page instead):
+
+- Fixed top `Navbar` (`SLADE_ROSE /` logo, `/build /lens /logic` links,
+  `Let's Talk` CTA → `mailto:sladerose1@gmail.com`) and in-flow `Footer`
+  (telemetry status line + copyright), both on every page via `Layout.astro`.
+- No light/dark toggle — dark mode only, per Color tokens above. The
+  Athenium scaffold's theme-toggle button and theme-init script were dropped
+  entirely, not just hidden.
+- Full-viewport grid-tile pages (home, `/logic`, `/build`) use `Layout`'s
+  `fullscreen` prop so the grid fills the space between navbar and footer
+  with no page scroll, matching the original strict-viewport-fill behavior.
+- `logic.html`'s existing copy ("This site has no JavaScript on the main
+  pages") is now stale once the Navbar ships (mobile menu toggle script,
+  Astro's view-transitions router) — needs a wording fix when that page is
+  ported, not a claim to carry over unchanged.
+
 ## Content conventions
 
 - Nav labels use the `/slug` convention (`/build`, `/lens`, `/logic`,

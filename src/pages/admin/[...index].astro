@@ -1,0 +1,9 @@
+---
+import SanityStudio from '../../components/SanityStudio.tsx';
+
+export function getStaticPaths() {
+  return [{ params: { index: undefined } }];
+}
+---
+
+<SanityStudio client:only="react" />

@@ -1,0 +1,134 @@
+---
+const links = [
+  { name: '/build', href: '/build' },
+  { name: '/lens', href: '/lens' },
+  { name: '/logic', href: '/logic' },
+];
+---
+
+<header class="navbar-wrapper">
+  <div class="container navbar-container">
+    <a href="/" class="logo">SLADE_ROSE /</a>
+
+    <nav class="nav-links">
+      {links.map(link => (
+        <a href={link.href} class="nav-link">{link.name}</a>
+      ))}
+    </nav>
+
+    <div class="nav-actions">
+      <a href="mailto:sladerose1@gmail.com" class="btn btn-primary">Let's Talk</a>
+    </div>
+
+    <button class="menu-toggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .navbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--color-bg-base);
+    border-bottom: 1px solid var(--color-border-grid);
+    padding: 0.75rem 0;
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 0.75rem;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-grid);
+    padding: 0.5rem;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--color-text-primary);
+    margin: 3px 0;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-actions {
+      display: none;
+    }
+    .navbar-wrapper.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--color-bg-base);
+      padding: 2rem;
+      border-bottom: 1px solid var(--color-border-grid);
+    }
+    .menu-toggle {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const initNavbar = () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('.navbar-wrapper');
+    menuToggle?.addEventListener('click', () => {
+      navbar?.classList.toggle('mobile-open');
+    });
+  };
+
+  initNavbar();
+  document.addEventListener('astro:page-load', initNavbar);
+</script>

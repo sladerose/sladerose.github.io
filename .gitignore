@@ -10,14 +10,26 @@
 
 # production
 /build
+dist/
+.vercel
+
+# astro
+.astro/
+
+# local workspace symlinks (point outside this repo, machine-specific)
+/.claude
+/.mcp.json
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*

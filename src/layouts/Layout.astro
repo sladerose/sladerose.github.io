@@ -1,0 +1,60 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	fullscreen?: boolean;
+}
+
+const {
+  title = "Slade Rose | Solution Architect",
+  description = "Slade Rose — Solution Architect and Development Lead at Athenium Consulting. SAP BTP ecosystems, Ruby on Rails, and radical simplicity.",
+  fullscreen = false
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a0a0a'/><text x='50' y='72' font-size='70' font-family='sans-serif' font-weight='900' fill='%23ff0055' text-anchor='middle'>S</text></svg>" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+
+		<ClientRouter />
+	</head>
+	<body class={fullscreen ? 'fullscreen-mode' : ''}>
+		<Navbar />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+
+		<style is:global>
+			body.fullscreen-mode {
+				height: 100vh;
+				height: 100dvh;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+			}
+			body.fullscreen-mode .navbar-wrapper {
+				position: relative !important;
+				top: auto !important;
+			}
+			body.fullscreen-mode main {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				overflow: hidden;
+				position: relative;
+			}
+		</style>
+	</body>
+</html>
