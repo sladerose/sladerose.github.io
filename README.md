@@ -1,31 +1,24 @@
 # sladerose.github.io
 
-Run your own race. This represents the personal portfolio and digital home of Slade Rose.
+Run your own race. Personal portfolio and digital home of Slade Rose.
 
-## Overview
+See `PRODUCT.md` for what this site is and its sections, `DESIGN.md` for the
+visual system (dark brutalist grid-tile, rose accent, mono telemetry labels),
+and `RESUME.md` for the current state of the Astro migration in progress.
 
-A minimalist, high-performance personal website designed to showcase projects and skills. It features a stark, high-contrast dark mode aesthetic and automated content updates.
+## Stack
 
-## Features
+Astro, React islands (`@astrojs/react`), Sanity CMS (`@sanity/astro`),
+Vercel adapter + `@vercel/analytics`.
 
-- **Minimalist Design**: Clean, typography-focused UI using the Inter font family.
-- **Dark Mode Native**: Built with a deep `#111111` background for reduced eye strain and premium feel.
-- **Automated Portfolio**: Includes a Ruby script (`update_projects.rb`) that automatically fetches and displays the latest top 5 repositories from GitHub.
-- **Responsive**: Fully responsive layout that scales gracefully from mobile to desktop (max-width 720px).
+## Development
 
-## Setup & Automation
+```bash
+npm install
+npm run dev      # astro dev
+npm run build    # astro build
+npm run preview  # astro preview
+```
 
-The project list is automated. To update it locally:
-
-1. Ensure you have Ruby installed.
-2. Run the update script:
-   ```bash
-   ruby update_projects.rb
-   ```
-   This will fetch the latest public repositories for user `sladerose` and update `index.html`.
-
-## Project Structure
-
-- `index.html`: Main entry point.
-- `style.css`: All styles (no frameworks, just pure CSS).
-- `update_projects.rb`: Automation script for fetching GitHub data.
+`/build` fetches a pinned list of GitHub repos at build time (see
+`src/pages/build.astro`) — no separate script or cron job to run.

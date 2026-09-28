@@ -6,17 +6,17 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sladerose.github.io/projects.html</loc>
+    <loc>https://sladerose.github.io/build</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sladerose.github.io/logic.html</loc>
+    <loc>https://sladerose.github.io/logic</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sladerose.github.io/lens.html</loc>
+    <loc>https://sladerose.github.io/lens</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

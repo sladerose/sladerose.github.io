@@ -203,6 +203,27 @@ Revisit once step 8 (`vercel link`) is done: add a Vercel Cron Job hitting
 a deploy hook on the same daily schedule, if the nightly-refresh behavior
 still matters once the project's live somewhere real.
 
+Step 6 (delete old files) also done this session. Deleted: `index.html`,
+`lens.html`, `logic.html`, `projects.html`, `style.css` — all fully
+superseded by step 4's Astro pages. Also deleted `.nojekyll` (a
+GitHub-Pages-only marker file; hosting decision is Vercel, not GitHub
+Pages, has been since before this migration started — the file had no
+purpose left). Updated `sitemap.xml`'s three sub-page URLs from
+`/logic.html` etc. to `/logic` etc. (matches the real Astro routes).
+Rewrote `README.md` from scratch — it described the old Ruby/plain-HTML
+setup in detail (a `ruby update_projects.rb` "Setup & Automation" section,
+a "Project Structure" list naming `index.html`/`style.css`), which would
+have been actively misleading left in place. New version is short, points
+to `PRODUCT.md`/`DESIGN.md`/`RESUME.md` rather than restating them, and
+gives the actual `npm` dev commands. Verified with another `astro build`
+after all the deletions — still clean, all 5 routes generate.
+
+Not touched, still says `sladerose.github.io` (the eventual real domain,
+`sladerose.co.za`, isn't wired yet — step 9): `sitemap.xml`'s `<loc>` values,
+`robots.txt`'s `Sitemap:` line, and `Layout.astro`'s `og:url` meta tag. All
+three need a find-and-replace once the domain switch (step 9) actually
+happens, not before.
+
 ## Next steps, in order
 
 1. ~~Redo the onboarding question batch, write `## Skill Routing`~~ — done.
@@ -218,17 +239,19 @@ still matters once the project's live somewhere real.
    fetch~~ — done, see above for exact scope, the fallback-on-failure
    behavior change, and the still-open daily-refresh-cadence follow-up
    (deferred to step 8).
-6. Delete the remaining old plain-HTML/CSS files (`index.html`, `lens.html`,
-   `logic.html`, `projects.html`, `style.css`) once the Astro version fully
-   replaces them — they're now fully superseded by step 4's pages but still
-   present untouched on disk, not yet deleted. (`update_projects.rb` + its
-   workflow are already gone, deleted in step 5 above.)
+6. ~~Delete the remaining old plain-HTML/CSS files~~ — done, see above for
+   exact scope (also dropped `.nojekyll`, fixed `sitemap.xml`, rewrote
+   `README.md`) and the still-open domain-string follow-up (deferred to
+   step 9).
 7. `sanity login` (user, interactively) → create new personal Sanity
    project/dataset → wire `astro.config.mjs`'s sanity integration to it
-   (not `sofrjamf`).
+   (not `sofrjamf`, not the `'placeholder'` literal it's currently set to).
 8. `vercel link` this project, deploy, confirm site live on a Vercel URL
-   before touching DNS/domain.
+   before touching DNS/domain. Also where the step-5 daily-refresh-cadence
+   follow-up (a Vercel Cron Job hitting a deploy hook) belongs, if wanted.
 9. Domain (`sladerose.co.za`) wiring — deferred, revisit only when asked.
+   Also update `sitemap.xml`, `robots.txt`, and `Layout.astro`'s `og:url`
+   away from the `sladerose.github.io` placeholder domain at the same time.
 10. Merge `astro-migration` → `main` once working end-to-end.
 
 ## Standing instructions
