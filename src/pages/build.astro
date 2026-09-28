@@ -1,5 +1,73 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Build-time fetch of pinned GitHub repos, replacing update_projects.rb.
+// Order preserved from PINNED_REPOS, same as the old script (not fetch order).
+const GITHUB_USER = 'sladerose';
+const PINNED_REPOS = ['sladerose.github.io', 'ExternalCAP', 'Folio', 'LearningRuby', 'FusionAnalyzer'];
+const DELAYS = [4, 7, 0, 3, 6, 2, 5];
+const FALLBACK_DESCRIPTION = 'Mission critical digital architecture.';
+
+const FALLBACK_PROJECTS = [
+  {
+    name: 'sladerose.github.io',
+    url: 'https://github.com/sladerose/sladerose.github.io',
+    description: 'Personal portfolio built with Astro, React islands, and Sanity CMS.',
+    languages: ['ASTRO', 'TYPESCRIPT', 'SANITY'],
+    delay: 0,
+  },
+];
+
+interface GitHubRepo {
+  name: string;
+  html_url: string;
+  description: string | null;
+  languages_url: string;
+}
+
+const headers: Record<string, string> = { 'User-Agent': 'sladerose-portfolio-build' };
+if (process.env.GITHUB_TOKEN) {
+  headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+}
+
+async function fetchJson(url: string) {
+  try {
+    const res = await fetch(url, { headers });
+    if (!res.ok) {
+      console.warn(`GitHub API request failed for ${url}: ${res.status} ${res.statusText}`);
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.warn(`Error fetching ${url}:`, err);
+    return null;
+  }
+}
+
+const allRepos: GitHubRepo[] =
+  (await fetchJson(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`)) ?? [];
+const repoMap = new Map(allRepos.map((repo) => [repo.name, repo]));
+
+const pinnedRepos = PINNED_REPOS.map((name) => repoMap.get(name)).filter(
+  (repo): repo is GitHubRepo => Boolean(repo)
+);
+
+const fetchedProjects = await Promise.all(
+  pinnedRepos.map(async (repo, index) => {
+    const languagesData = (await fetchJson(repo.languages_url)) ?? {};
+    return {
+      name: repo.name,
+      url: repo.html_url,
+      description: repo.description?.trim() ? repo.description : FALLBACK_DESCRIPTION,
+      languages: Object.keys(languagesData).slice(0, 3),
+      delay: DELAYS[index] ?? index,
+    };
+  })
+);
+
+// GitHub API unreachable or rate-limited at build time — keep the site
+// working with a static fallback rather than failing the whole build.
+const projects = fetchedProjects.length > 0 ? fetchedProjects : FALLBACK_PROJECTS;
 ---
 
 <Layout
@@ -8,25 +76,21 @@ import Layout from '../layouts/Layout.astro';
   fullscreen
 >
   <div class="grid-container">
-    {/*
-      Step 5 (RESUME.md): replace this static tile with a build-time fetch
-      of top GitHub repos for @sladerose, mapped over the same tile markup.
-      Kept as a single static tile for now, matching the old
-      update_projects.rb output before it's replaced.
-    */}
-    <a href="https://github.com/sladerose/sladerose.github.io" target="_blank" class="tile tile-project" style="--delay: 0">
-      <div class="card-meta mono">STRATEGIC_PRACTICE // 01.1</div>
-      <div class="project-info">
-        <h3>sladerose.github.io</h3>
-        <p>Personal portfolio built with Astro, React islands, and Sanity CMS.</p>
-      </div>
+    {projects.map((project, index) => (
+      <a href={project.url} target="_blank" class="tile tile-project" style={`--delay: ${project.delay}`}>
+        <div class="card-meta mono">STRATEGIC_PRACTICE // 01.{index + 1}</div>
+        <div class="project-info">
+          <h3>{project.name}</h3>
+          <p>{project.description}</p>
+        </div>
 
-      <div class="project-langs">
-        <span class="lang-tag mono">ASTRO</span>
-        <span class="lang-tag mono">TYPESCRIPT</span>
-        <span class="lang-tag mono">SANITY</span>
-      </div>
-      <div class="tile-status mono">BUILD_SOURCE // @SLADEROSE</div>
-    </a>
+        <div class="project-langs">
+          {project.languages.map((lang) => (
+            <span class="lang-tag mono">{lang.toUpperCase()}</span>
+          ))}
+        </div>
+        <div class="tile-status mono">BUILD_SOURCE // @SLADEROSE</div>
+      </a>
+    ))}
   </div>
 </Layout>

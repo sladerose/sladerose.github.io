@@ -171,6 +171,38 @@ scaffold (Sanity/Astro transitive deps) — not introduced by this session's
 changes, not yet triaged. Worth a look before going to production, not
 blocking further migration work.
 
+Step 5 (GitHub fetch) also done this session. `src/pages/build.astro`
+rewritten: fetches `PINNED_REPOS` (`sladerose.github.io`, `ExternalCAP`,
+`Folio`, `LearningRuby`, `FusionAnalyzer`) from the GitHub API at build time,
+same pinned-list-filter approach as `update_projects.rb` (order from the
+list, not fetch order), fetches each repo's top-3 languages, falls back to
+`"Mission critical digital architecture."` when a repo has no description —
+all matching the old Ruby script's behavior exactly. `GITHUB_TOKEN` env var
+optional (higher rate limit), read via `process.env` — not wired to any CI
+secret yet, works unauthenticated for now (GitHub allows 60 unauthed
+requests/hour, plenty for 6 calls). One deliberate behavior change: on
+total fetch failure (network down, rate-limited) it falls back to a static
+single-tile placeholder instead of crashing the whole `astro build` — the
+old Ruby script `exit 1`'d on failure, which was fine for a cron job that
+just skips a day, but would be worse for a personal-site build pipeline
+where a GitHub API hiccup could block *every* deploy. Verified with a real
+`astro build` hitting the live GitHub API: only `sladerose.github.io`
+currently matched from the 5 pinned names — `ExternalCAP`/`Folio`/
+`LearningRuby`/`FusionAnalyzer` don't resolve anymore (renamed, deleted, or
+made private since the Ruby script was last run for real — not a bug in the
+new code, just stale pinned names). Not fixed — that pinned list is the
+user's call, not mine to edit blind.
+
+Deleted `update_projects.rb` and `.github/workflows/update_projects.yml` —
+both fully superseded now that the fetch happens at build time on every
+deploy. Note: the workflow's other job (daily-midnight cron trigger, so the
+list stays fresh even with no pushes) has **no replacement yet** — Astro's
+build-time fetch only re-runs when something triggers a new build, and
+there's no Vercel project linked yet to attach a scheduled deploy hook to.
+Revisit once step 8 (`vercel link`) is done: add a Vercel Cron Job hitting
+a deploy hook on the same daily schedule, if the nightly-refresh behavior
+still matters once the project's live somewhere real.
+
 ## Next steps, in order
 
 1. ~~Redo the onboarding question batch, write `## Skill Routing`~~ — done.
@@ -182,15 +214,15 @@ blocking further migration work.
    scope, the two content edits, and the `projectId` placeholder-format fix
    that unblocked the build. Verified with a real `astro build`, not just
    by inspection.
-5. Replace `update_projects.rb` + its GitHub Actions cron with an Astro
-   build-time fetch of top GitHub repos (same behavior, no Ruby dependency).
-   `src/pages/build.astro` already has a comment marking exactly where this
-   goes.
-6. Delete the old plain-HTML/CSS/Ruby files (`index.html`, `lens.html`,
-   `logic.html`, `projects.html`, `style.css`, `update_projects.rb`, its
-   GitHub Actions workflow) once the Astro version fully replaces them —
-   they're now fully superseded by step 4's pages but still present
-   untouched on disk, not yet deleted.
+5. ~~Replace `update_projects.rb` + its cron with an Astro build-time
+   fetch~~ — done, see above for exact scope, the fallback-on-failure
+   behavior change, and the still-open daily-refresh-cadence follow-up
+   (deferred to step 8).
+6. Delete the remaining old plain-HTML/CSS files (`index.html`, `lens.html`,
+   `logic.html`, `projects.html`, `style.css`) once the Astro version fully
+   replaces them — they're now fully superseded by step 4's pages but still
+   present untouched on disk, not yet deleted. (`update_projects.rb` + its
+   workflow are already gone, deleted in step 5 above.)
 7. `sanity login` (user, interactively) → create new personal Sanity
    project/dataset → wire `astro.config.mjs`'s sanity integration to it
    (not `sofrjamf`).
