@@ -10,8 +10,9 @@ export default defineConfig({
   integrations: [sanity({
     // TODO(step 7, RESUME.md): placeholder until `sanity login` + new
     // personal project/dataset are created. Never point this at Athenium's
-    // `sofrjamf` project.
-    projectId: 'REPLACE_ME',
+    // `sofrjamf` project. Must stay lowercase-alphanumeric-dash — Sanity's
+    // client rejects anything else even as an unused placeholder.
+    projectId: 'placeholder',
     dataset: 'production',
     useCdn: false, // Set to true for production if needed
     studioPath: '/admin', // The path where Sanity Studio will be hosted

@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Projects | Slade Rose"
+  description="Public projects by Slade Rose — SAP BTP, Ruby on Rails, Chrome extensions, and more."
+  fullscreen
+>
+  <div class="grid-container">
+    {/*
+      Step 5 (RESUME.md): replace this static tile with a build-time fetch
+      of top GitHub repos for @sladerose, mapped over the same tile markup.
+      Kept as a single static tile for now, matching the old
+      update_projects.rb output before it's replaced.
+    */}
+    <a href="https://github.com/sladerose/sladerose.github.io" target="_blank" class="tile tile-project" style="--delay: 0">
+      <div class="card-meta mono">STRATEGIC_PRACTICE // 01.1</div>
+      <div class="project-info">
+        <h3>sladerose.github.io</h3>
+        <p>Personal portfolio built with Astro, React islands, and Sanity CMS.</p>
+      </div>
+
+      <div class="project-langs">
+        <span class="lang-tag mono">ASTRO</span>
+        <span class="lang-tag mono">TYPESCRIPT</span>
+        <span class="lang-tag mono">SANITY</span>
+      </div>
+      <div class="tile-status mono">BUILD_SOURCE // @SLADEROSE</div>
+    </a>
+  </div>
+</Layout>

@@ -108,15 +108,68 @@ Step 3 (re-skin) also done this session. Changes:
   `fullscreen` prop pattern for viewport-fill pages — so this doesn't need
   re-deriving next session.
 
-Flagged, not yet fixed (content, belongs to step 4 when that page is
-ported): `logic.html`'s existing copy claims "no JavaScript on the main
-pages," which is no longer strictly true once Navbar's mobile-menu script
-and Astro's view-transitions router ship on every page. Needs a wording
-tweak when `/logic` is ported, not before.
+Step 4 (page porting) also done this session. Pages created:
+`src/pages/index.astro`, `src/pages/lens.astro`, `src/pages/logic.astro`,
+`src/pages/build.astro` (route is `/build`, not `/projects` — matches
+`PRODUCT.md`'s section naming, source file was `projects.html`). All four
+use `Layout` with `fullscreen` (viewport-fill grids, no page scroll, matches
+old behavior). Grid-tile system CSS (`.tile`, `.grid-container`,
+`.card-meta`, `.tile-status`, `.project-langs`, `.lang-tag`, `.tile-project`,
+`.tile-offline`, responsive breakpoints) moved from the old `style.css` into
+`global.css`, token values unchanged (already matched `DESIGN.md`).
+Page-specific CSS (`.photo-tile` etc. on `/lens`, `.logic-grid`/`.entry-date`
+on `/logic`) kept scoped per-page via Astro `<style>` blocks, same split as
+before.
 
-`npm install` still not run (no `node_modules/` yet) — nothing has been
-verified to actually build or `astro dev` yet. First real build/dev check
-should happen once page porting (step 4) gives it something to render.
+Each page's own inline "back to home" link/tile was **removed** — the
+persistent Navbar's logo now covers that, and it was genuinely redundant
+chrome once Navbar shipped. `/logic`'s header tile changed from a plain tile
+to `.tile-2x1` (spans 2 columns) to keep its 3×2 grid fully flush after
+removing the back-tile (5 tiles: one 2x1 + four singles = 6 cells, no gaps).
+
+Two content edits made beyond straight porting, both because "verbatim"
+would have shipped something false once the site's actual architecture
+changed:
+- `/logic`'s "Build It, Then Delete Half" entry no longer claims "no
+  JavaScript on the main pages" (that's false now — Navbar's mobile-menu
+  script + Astro's view-transitions router ship everywhere). Reworded to
+  say the *tile grids* stay pure CSS, only nav chrome carries any JS.
+- `/build`'s single sample project tile no longer describes itself as
+  "HTML, CSS, and Ruby automation, no JavaScript" (also now false — it's
+  Astro/TypeScript/Sanity). Updated tags to `ASTRO`/`TYPESCRIPT`/`SANITY`.
+  Kept as a single static tile with a comment marking it for step 5's
+  dynamic-fetch replacement — didn't try to build the GitHub-fetch logic
+  itself, that's step 5's job, not step 4's.
+
+Also moved Google Fonts loading (Space Mono, Inter) out of a per-page
+`@import` in `global.css` and into `<link rel="preconnect">` +
+`<link rel="stylesheet">` tags in `Layout.astro`'s `<head>` — matches what
+every old HTML page already did individually, just centralized once instead
+of duplicated four times.
+
+Ran `npm install` (hit one transient `ECONNRESET`, succeeded on retry) then
+`npx astro build` to verify. First build failed:
+`projectId can only contain only a-z, 0-9 and dashes` — Sanity's client
+rejects `REPLACE_ME` outright even unused. Fixed by changing the placeholder
+in both `astro.config.mjs` and `sanity.config.ts` to `'placeholder'`
+(same TODO comment, still pointing at step 7, just a different literal that
+satisfies Sanity's format check). Second build succeeded clean: all 5 routes
+generated (`/`, `/build`, `/lens`, `/logic`, `/admin`). Spot-checked
+`dist/index.html` output — correct, no stray Athenium branding (the one
+"Athenium Consulting" hit in there is Slade's real, legitimate bio content).
+`esbuild`/`sharp` install scripts needed manual approval
+(`npm install-scripts approve ...`) — expected, they're native-binary
+installers Vite/Astro's image pipeline depend on, not arbitrary
+third-party scripts. `package-lock.json` now exists (new, from `npm
+install`) and should be committed alongside this step's changes.
+Removed `dist/`/`.vercel/` build artifacts after verifying (gitignored
+either way, just tidy).
+
+`npm audit` reports 14 vulnerabilities (1 low, 4 moderate, 8 high, 1
+critical) in the dependency tree inherited from the AtheniumWebsite
+scaffold (Sanity/Astro transitive deps) — not introduced by this session's
+changes, not yet triaged. Worth a look before going to production, not
+blocking further migration work.
 
 ## Next steps, in order
 
@@ -125,19 +178,19 @@ should happen once page porting (step 4) gives it something to render.
 3. ~~Re-skin `global.css`/`Layout.astro`/`Navbar.astro`/`Footer.astro`~~ —
    done, see above for exact scope and the one flagged follow-up
    (`logic.html` copy fix, deferred to step 4).
-4. Port the four existing pages (`index.html`, `lens.html`, `logic.html`,
-   `projects.html`) into Astro pages/components, preserving the grid-tile
-   markup and content verbatim. This is also where the grid-tile system CSS
-   (`.tile`, `.grid-container`, `.card-meta`, `.tile-status`, etc. — still
-   sitting in the old `style.css`) gets moved into `global.css` or
-   per-page styles, and where each page's own inline "back to home" link
-   gets removed now that the persistent Navbar supersedes it. Run
-   `npm install` + `astro dev` as part of this step to actually verify
-   something renders, not before.
+4. ~~Port the four existing pages into Astro~~ — done, see above for exact
+   scope, the two content edits, and the `projectId` placeholder-format fix
+   that unblocked the build. Verified with a real `astro build`, not just
+   by inspection.
 5. Replace `update_projects.rb` + its GitHub Actions cron with an Astro
    build-time fetch of top GitHub repos (same behavior, no Ruby dependency).
-6. Delete the old plain-HTML/CSS/Ruby files once the Astro version fully
-   replaces them.
+   `src/pages/build.astro` already has a comment marking exactly where this
+   goes.
+6. Delete the old plain-HTML/CSS/Ruby files (`index.html`, `lens.html`,
+   `logic.html`, `projects.html`, `style.css`, `update_projects.rb`, its
+   GitHub Actions workflow) once the Astro version fully replaces them —
+   they're now fully superseded by step 4's pages but still present
+   untouched on disk, not yet deleted.
 7. `sanity login` (user, interactively) → create new personal Sanity
    project/dataset → wire `astro.config.mjs`'s sanity integration to it
    (not `sofrjamf`).
